@@ -1,0 +1,9 @@
+
+stm32m157的工具链前缀CROSS_COMPILE是什么
+
+
+根据STM32M157的官方文档，它支持多种工具链，如GCC、IAR等，具体使用哪个工具链需要根据开发者的需求进行选择。因此，CROSS_COMPILE的值也需要根据具体使用的工具链进行设置。以GCC工具链为例，CROSS_COMPILE通常应该设置为“arm-none-eabi-”，因为GCC编译器的命名规范要求针对ARM处理器的交叉编译工具链的前缀应该为“arm-none-eabi-”。
+
+
+使用pc的就不需要填
+
