@@ -64,6 +64,8 @@ void MX_FREERTOS_Init(void);
 ring_buffer test_buffer;
 ring_buffer uart3_buffer;
 
+void USART3_Wirte(char *buf, int len);
+
 /* USER CODE END 0 */
 
 /**
@@ -113,6 +115,8 @@ int main(void)
   MX_FREERTOS_Init();
   /* Start scheduler */
   osKernelStart();
+  USART3_Wirte("AT\r\n", 4);
+  
 
   /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
@@ -120,7 +124,6 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -171,7 +174,7 @@ void USART3_IRQHandler(void)
 	 * 把数据读出来，存入环形buff	
      */
 	uint32_t isrflags   = READ_REG(huart3.Instance->SR);
-	uint32_t cr1its     = READ_REG(huart->Instance->CR1);
+	uint32_t cr1its     = READ_REG(huart3.Instance->CR1);
 	char c;
 	/* UART in mode Receiver -------------------------------------------------*/
     if (((isrflags & USART_SR_RXNE) != RESET) && ((cr1its & USART_CR1_RXNEIE) != RESET))

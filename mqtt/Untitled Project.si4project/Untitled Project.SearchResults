@@ -1,1 +1,19 @@
----- USART3_IRQHandler Matches (0 in 0 files) ----
+---- USART3_IRQHandler Matches (22 in 7 files) ----
+stm32f1xx_it.h (01_FreeRTOS_Template\Core\Inc) line 56 : void USART3_IRQHandler(void);
+main.c (01_FreeRTOS_Template\Core\Src) line 171 : void USART3_IRQHandler(void)
+stm32f1xx_it.c (01_FreeRTOS_Template\Core\Src) line 168 : void USART3_IRQHandler(void)
+F103_Moduel.htm (01_FreeRTOS_Template\MDK-ARM\F103_Moduel) line 87 :  <LI><a href="#[31]">USART3_IRQHandler</a> from main.o(i.USART3_IRQHandler) referenced from startup_stm32f103xe.o(RESET)
+F103_Moduel.htm (01_FreeRTOS_Template\MDK-ARM\F103_Moduel) line 801 : <P><STRONG><a name="[31]"></a>USART3_IRQHandler</STRONG> (Thumb, 48 bytes, Stack size 16 bytes, main.o(i.USART3_IRQHandler))
+F103_Moduel.htm (01_FreeRTOS_Template\MDK-ARM\F103_Moduel) line 802 : <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = USART3_IRQHandler
+F103_Moduel.htm (01_FreeRTOS_Template\MDK-ARM\F103_Moduel) line 927 : <BR><BR>[Called By]<UL><LI><a href="#[31]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_IRQHandler
+Untitled Project.SearchResults (C:\Users\Lenovo\Desktop\laptop_demo\mqtt\Untitled Project.si4project) line 1 : ---- USART3_IRQHandler Matches (#count#) ----
+Untitled Project.SearchResults (C:\Users\Lenovo\Desktop\laptop_demo\mqtt\Untitled Project.si4project) line 2 : stm32f1xx_it.h (01_FreeRTOS_Template\Core\Inc) line 56 : void USART3_IRQHandler(void);
+Untitled Project.SearchResults (C:\Users\Lenovo\Desktop\laptop_demo\mqtt\Untitled Project.si4project) line 3 : main.c (01_FreeRTOS_Template\Core\Src) line 171 : void USART3_IRQHandler(void)
+Untitled Project.SearchResults (C:\Users\Lenovo\Desktop\laptop_demo\mqtt\Untitled Project.si4project) line 4 : stm32f1xx_it.c (01_FreeRTOS_Template\Core\Src) line 168 : void USART3_IRQHandler(void)
+Untitled Project.SearchResults (C:\Users\Lenovo\Desktop\laptop_demo\mqtt\Untitled Project.si4project) line 5 : F103_Moduel.htm (01_FreeRTOS_Template\MDK-ARM\F103_Moduel) line 87 :  <LI><a href="#[31]">USART3_IRQHandler</a> from main.o(i.USART3_IRQHandler) referenced from startup_stm32f103xe.o(RESET)
+Untitled Project.SearchResults (C:\Users\Lenovo\Desktop\laptop_demo\mqtt\Untitled Project.si4project) line 6 : F103_Moduel.htm (01_FreeRTOS_Template\MDK-ARM\F103_Moduel) line 801 : <P><STRONG><a name="[31]"></a>USART3_IRQHandler</STRONG> (Thumb, 48 bytes, Stack size 16 bytes, main.o(i.USART3_IRQHandler))
+Untitled Project.SearchResults (C:\Users\Lenovo\Desktop\laptop_demo\mqtt\Untitled Project.si4project) line 7 : F103_Moduel.htm (01_FreeRTOS_Template\MDK-ARM\F103_Moduel) line 802 : <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = USART3_IRQHandler
+Untitled Project.SearchResults (C:\Users\Lenovo\Desktop\laptop_demo\mqtt\Untitled Project.si4project) line 8 : F103_Moduel.htm (01_FreeRTOS_Template\MDK-ARM\F103_Moduel) line 927 : <BR><BR>[Called By]<UL><LI><a href="#[31]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_IRQHandler
+main(5367).c (2023/9/10 - 14:07:02) line 67 : void USART3_IRQHandler(void);
+main(5367).c (2023/9/10 - 14:07:02) line 169 : void USART3_IRQHandler(void)
+stm32f1xx_it(4106).c (2023/9/10 - 13:32:16) line 167 : void USART3_IRQHandler(void)

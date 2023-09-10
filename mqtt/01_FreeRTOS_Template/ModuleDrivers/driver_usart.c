@@ -40,7 +40,8 @@ void EnableUSART3IRQ(void)
 {
     HAL_NVIC_SetPriority(USART3_IRQn, 0, 1);    // 设置USART1中断的优先级
     HAL_NVIC_EnableIRQ(USART3_IRQn);            // 使能USART1的中断
-    
+
+	huart3.Instance->SR &= ~(USART_SR_RXNE);
     __HAL_UART_ENABLE_IT(&huart3, UART_IT_RXNE);   // 使能USRAT1的发送和接收中断
 }
 
