@@ -23,11 +23,6 @@ int platform_mutex_trylock(platform_mutex_t* m)
     return xSemaphoreTake(m->mutex, 0);
 }
 
-int platform_mutex_lock_timeout(platform_mutex_t* m, int timeout)
-{
-    return xSemaphoreTake(m->mutex, timeout);
-}
-
 int platform_mutex_unlock(platform_mutex_t* m)
 {
     return xSemaphoreGive(m->mutex);
