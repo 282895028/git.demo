@@ -22,7 +22,7 @@ int platform_mutex_trylock(platform_mutex_t* m)
 {
     return xSemaphoreTake(m->mutex, 0);
 }
-/*xjc add*/
+
 int platform_mutex_lock_timeout(platform_mutex_t* m, int timeout)
 {
     return xSemaphoreTake(m->mutex, timeout);
