@@ -5,6 +5,7 @@
 #define AT_RESP_LEN   100
 
 
+
 static platform_mutex_t at_ret_mutex;
 static int g_at_status;
 static char g_at_resp[AT_RESP_LEN];
