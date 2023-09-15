@@ -63,8 +63,11 @@ void MX_FREERTOS_Init(void);
 
 ring_buffer test_buffer;
 ring_buffer uart3_buffer;
+static platform_mutex_t uart_recv_mutex;
 
 void USART3_Wirte(char *buf, int len);
+void UART3_Init(void);
+
 
 /* USER CODE END 0 */
 
@@ -104,6 +107,8 @@ int main(void)
 	
     ring_buffer_init(&test_buffer);
     ring_buffer_init(&uart3_buffer);
+	UART3_Lock_Init();
+	
     EnableDebugIRQ();
 	EnableUSART3IRQ();
     printf("Hello World!\r\n");
@@ -114,13 +119,14 @@ int main(void)
   osKernelInitialize();  /* Call init function for freertos objects (in freertos.c) */
   MX_FREERTOS_Init();
   /* Start scheduler */
+  ATInit();
   osKernelStart();
-  USART3_Wirte("AT\r\n", 4);
-  
+ 
 
   /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  USART3_Wirte("AT\r\n", 4);
   while (1)
   {
     /* USER CODE END WHILE */
@@ -181,9 +187,17 @@ void USART3_IRQHandler(void)
     {
       c = huart3.Instance->DR;
 	  ring_buffer_write(c, &uart3_buffer);
+	  platform_mutex_unlock(&uart_recv_mutex);
       return;
     }
 }
+void UART3_Lock_Init(void)
+{
+
+	platform_mutex_init(&uart_recv_mutex);
+	platform_mutex_lock(&uart_recv_mutex); //mutex = 0;
+}
+
 
 void USART3_Wirte(char *buf, int len)
 {
@@ -195,6 +209,21 @@ void USART3_Wirte(char *buf, int len)
 		i++;
 	}
 }
+
+void USART3_Read(char *buf, int timeout)
+{
+	while(1)
+	{
+		if(0 == ring_buffer_read(c, &uart3_buffer));
+			return;
+		else
+		{
+			platform_mutex_lock_timeout(&uart_recv_mutex, timeout);
+		}
+	}
+
+}
+
 /* USER CODE END 4 */
 
 /**

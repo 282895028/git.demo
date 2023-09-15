@@ -6,8 +6,14 @@
 
 
 static platform_mutex_t at_ret_mutex;
+static platform_mutex_t at_packet_mutex;
+
 static int g_at_status;
 static char g_at_resp[AT_RESP_LEN];
+static char g_at_packet[AT_RESP_LEN];
+static int g_at_packet_len;
+
+
 /* status
  *   0 - ok
  *  -1 - err
@@ -26,7 +32,11 @@ int ATInit(void)
 {
 	platform_mutex_init(&at_ret_mutex);
 	platform_mutex_lock(&at_ret_mutex); //mutex = 0;
+	
+	platform_mutex_init(&at_packet_mutex);
+	platform_mutex_lock(&at_packet_mutex); //mutex = 0;
 }
+
 
 /*eg. buf = "AT+CIPMPODE=1"
  *	  len = strlen(buf);
@@ -64,6 +74,73 @@ int ATSendCmd(char *buf, int len, char *resp, int resp_len, int timeout)
 			
 }
 
+int GetSpecialATString(char *buf)
+{
+	if (strstr(buf, "+IPD,"))
+		return 1;
+	else
+		return 0;
+}
+
+void ProcessSpecialATString(char *buf)
+{
+	int i =0;
+	int len = 0;
+	/* +IPD,n:xxxxxxxx */
+	
+	while(1)
+	{
+		/* 读出后续字符 */
+		/* 解析出长度 */
+		i = 0;
+		while(1)
+		{
+			HAL_AT_Secv(&buf[i], portMAX_DELAY);
+			if(buf[i] == ':')
+			{
+				break;		
+			}
+			else
+			{
+				len = len *10 + (buf[i] - '0');
+			}
+			i++;
+		}
+
+		/* 读出真正的数据*/
+		i = 0;
+		while(i < len)
+		{
+			HAL_AT_Secv(&buf[i], portMAX_DELAY);
+			if(i < AT_RESP_LEN)
+			{
+				g_at_packet[i] = buf[i];	
+				g_at_packet_len = i;
+			}
+				
+			i++;
+		}
+		/* 解锁 */
+		platform_mutex_unlock(&at_packet_mutex);
+	}
+}
+
+void ATReadPacket(char *buf, int len, int *resp_len, int timeout)
+{	int ret;
+	ret = platform_mutex_lock_timeout(&at_packet_mutex, timeout);
+	if (ret)
+	{
+		*resp_len =  len > g_at_packet? g_at_packet : len;
+		memcpy(buf, g_at_packet, *resp_len);
+		return AT_OK;
+	}
+	else
+	{
+		return AT_CMD_TIMOUT;
+	}
+		
+}
+
 void ATRecvParser(void * params)
 {
 	char buf[AT_RESP_LEN];
@@ -98,9 +175,21 @@ void ATRecvParser(void * params)
 			else if (GetSpecialATString(buf))
 			{
 				ProcessSpecialATString(buf);
+				i = -1;
 			}
 			i++;
+			
 
+	}
+}
+
+void Task_ATTest(void *Parm)
+{
+	int ret;
+	while(1)
+	{
+		ret = ATSendCmd("AT", 2, NULL, 0, 1000);
+		printf("ATSendCmd ret = %d\r\n", ret);
 	}
 }
 
