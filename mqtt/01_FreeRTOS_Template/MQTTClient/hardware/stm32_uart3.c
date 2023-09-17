@@ -24,7 +24,7 @@ void USART3_IRQHandler(void)
     {
       c = huart3.Instance->DR;
 	  ring_buffer_write(c, &uart3_buffer);
-	  platform_mutex_unlock(&uart_recv_mutex);
+	  platform_mutex_unlock_from_isr(&uart_recv_mutex);
       return;
     }
 }

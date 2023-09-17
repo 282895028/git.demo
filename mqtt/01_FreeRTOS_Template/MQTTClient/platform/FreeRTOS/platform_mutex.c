@@ -9,7 +9,8 @@
 
 int platform_mutex_init(platform_mutex_t* m)
 {
-    m->mutex = xSemaphoreCreateMutex();
+    m->mutex = xSemaphoreCreateBinary()//xSemaphoreCreateMutex();
+    xSemaphoreCreateMutex();
     return 0;
 }
 
@@ -32,6 +33,17 @@ int platform_mutex_unlock(platform_mutex_t* m)
 {
     return xSemaphoreGive(m->mutex);
 }
+
+int platform_mutex_unlock_from_isr(platform_mutex_t* m)
+{
+	static BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+
+    xSemaphoreGiveFromISR(m->mutex, &xHigherPriorityTaskWoken );
+	portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+	return pdTRUE;
+}
+
+/*add end*/
 
 int platform_mutex_destroy(platform_mutex_t* m)
 {

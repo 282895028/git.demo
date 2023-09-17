@@ -8,10 +8,11 @@
 
 
 int ATInit(void);
-int ATSendCmd(char *buf, int len, char *resp, int resp_len, int timeout);
+int ATSendCmd(char *buf,char *resp, int resp_len, int timeout);
 int ATReadPacket(char *buf, int len, int *resp_len, int timeout);
 void ATRecvParser(void * params);
 void Task_ATTest(void *Parm);
+int ATSendData(char *buf,int len, int timeout);
 
 
 

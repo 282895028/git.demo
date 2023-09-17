@@ -20,6 +20,7 @@ int platform_mutex_lock(platform_mutex_t* m);
 int platform_mutex_trylock(platform_mutex_t* m);
 int platform_mutex_lock_timeout(platform_mutex_t* m, int timeout);
 int platform_mutex_unlock(platform_mutex_t* m);
+int platform_mutex_unlock_from_isr(platform_mutex_t* m);
 int platform_mutex_destroy(platform_mutex_t* m);
 
 #endif
