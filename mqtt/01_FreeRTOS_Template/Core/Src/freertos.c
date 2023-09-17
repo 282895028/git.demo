@@ -24,9 +24,13 @@
 #include "main.h"
 #include "cmsis_os.h"
 
+
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
+#include <at_command.h>
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/

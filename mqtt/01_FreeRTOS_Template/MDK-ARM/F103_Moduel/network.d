@@ -12,6 +12,7 @@ f103_moduel\network.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wr
 f103_moduel\network.o: ..\MQTTClient\platform\FreeRTOS\platform_memory.h
 f103_moduel\network.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 f103_moduel\network.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+f103_moduel\network.o: D:\keil5\ARM\ARMCC\Bin\..\include\string.h
 f103_moduel\network.o: ..\MQTTClient\network\nettype_tcp.h
 f103_moduel\network.o: ..\MQTTClient\platform\FreeRTOS\platform_net_socket.h
 f103_moduel\network.o: ..\MQTTClient\network\network.h

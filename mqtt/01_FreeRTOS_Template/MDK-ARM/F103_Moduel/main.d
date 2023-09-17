@@ -43,3 +43,8 @@ f103_moduel\main.o: ../Core/Inc/gpio.h
 f103_moduel\main.o: ..\ModuleDrivers\driver_usart.h
 f103_moduel\main.o: ..\ModuleDrivers\driver_key.h
 f103_moduel\main.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+f103_moduel\main.o: ..\MQTTClient\platform\FreeRTOS\platform_mutex.h
+f103_moduel\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
+f103_moduel\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
+f103_moduel\main.o: ..\MQTTClient\hardware\stm32_uart3.h
+f103_moduel\main.o: ..\MQTTClient\at\at_command.h

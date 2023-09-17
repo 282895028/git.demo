@@ -33,4 +33,6 @@ extern void EnableDebugIRQ(void);
 */
 extern void DisableDebugIRQ(void);
 
+extern void EnableUSART3IRQ(void);
+
 #endif /* __DRIVER_USART_H */

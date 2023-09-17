@@ -14,3 +14,4 @@ f103_moduel\platform_thread.o: ../Middlewares/Third_Party/FreeRTOS/Source/includ
 f103_moduel\platform_thread.o: ..\MQTTClient\platform\FreeRTOS\platform_memory.h
 f103_moduel\platform_thread.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 f103_moduel\platform_thread.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+f103_moduel\platform_thread.o: D:\keil5\ARM\ARMCC\Bin\..\include\string.h

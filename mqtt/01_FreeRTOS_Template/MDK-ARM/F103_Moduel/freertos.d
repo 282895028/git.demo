@@ -41,3 +41,4 @@ f103_moduel\freertos.o: ..\ModuleDrivers\ring_buffer.h
 f103_moduel\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
 f103_moduel\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
 f103_moduel\freertos.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+f103_moduel\freertos.o: ..\MQTTClient\at\at_command.h

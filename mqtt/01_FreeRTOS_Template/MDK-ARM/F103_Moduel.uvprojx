@@ -336,7 +336,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103xE</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;..\ModuleDrivers;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3;..\MQTTClient\mqtt;..\MQTTClient\mqttclient;..\MQTTClient\platform\FreeRTOS;..\MQTTClient\common;..\MQTTClient\network;..\MQTTClient\common\PLOOC</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;..\ModuleDrivers;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3;..\MQTTClient\mqtt;..\MQTTClient\mqttclient;..\MQTTClient\platform\FreeRTOS;..\MQTTClient\common;..\MQTTClient\network;..\MQTTClient\common\PLOOC;..\MQTTClient\hal;..\MQTTClient\at;..\MQTTClient\hardware</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -454,11 +454,6 @@
                   </Cads>
                 </FileArmAds>
               </FileOption>
-            </File>
-            <File>
-              <FileName>usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Core/Src/usart.c</FilePath>
             </File>
             <File>
               <FileName>stm32f1xx_it.c</FileName>
@@ -615,6 +610,11 @@
         <Group>
           <GroupName>ModuleDrivers</GroupName>
           <Files>
+            <File>
+              <FileName>usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Core/Src/usart.c</FilePath>
+            </File>
             <File>
               <FileName>driver_usart.c</FileName>
               <FileType>1</FileType>
@@ -1377,6 +1377,36 @@
               <FileName>platform_timer.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\MQTTClient\platform\FreeRTOS\platform_timer.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>at</GroupName>
+          <Files>
+            <File>
+              <FileName>at_command.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\MQTTClient\at\at_command.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>hal</GroupName>
+          <Files>
+            <File>
+              <FileName>at_uart_hal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\MQTTClient\hal\at_uart_hal.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>hardware</GroupName>
+          <Files>
+            <File>
+              <FileName>stm32_uart3.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\MQTTClient\hardware\stm32_uart3.c</FilePath>
             </File>
           </Files>
         </Group>

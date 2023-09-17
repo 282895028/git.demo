@@ -1,5 +1,9 @@
 
 #include "at_command.h"
+#include "at_uart_hal.h"
+#include <platform_mutex.h>
+#include <string.h>
+#include <stdio.h>
 
 #define AT_CMD_TIMOUT 1000
 #define AT_RESP_LEN   100
@@ -24,7 +28,7 @@ void SetATStatus(int status)
 	 g_at_status = status;
 }
 
-int GetATStatus(int statuc)
+int GetATStatus(void)
 {
 	return g_at_status;
 }
@@ -35,6 +39,8 @@ int ATInit(void)
 	
 	platform_mutex_init(&at_packet_mutex);
 	platform_mutex_lock(&at_packet_mutex); //mutex = 0;
+
+	return 0;
 }
 
 
@@ -74,7 +80,7 @@ int ATSendCmd(char *buf, int len, char *resp, int resp_len, int timeout)
 			
 }
 
-int GetSpecialATString(char *buf)
+static int GetSpecialATString(char *buf)
 {
 	if (strstr(buf, "+IPD,"))
 		return 1;
@@ -82,7 +88,7 @@ int GetSpecialATString(char *buf)
 		return 0;
 }
 
-void ProcessSpecialATString(char *buf)
+static void ProcessSpecialATString(char *buf)
 {
 	int i =0;
 	int len = 0;
@@ -95,7 +101,7 @@ void ProcessSpecialATString(char *buf)
 		i = 0;
 		while(1)
 		{
-			HAL_AT_Secv(&buf[i], portMAX_DELAY);
+			HAL_AT_Secv(&buf[i], (int)portMAX_DELAY);
 			if(buf[i] == ':')
 			{
 				break;		
@@ -111,7 +117,7 @@ void ProcessSpecialATString(char *buf)
 		i = 0;
 		while(i < len)
 		{
-			HAL_AT_Secv(&buf[i], portMAX_DELAY);
+			HAL_AT_Secv(&buf[i], (int)portMAX_DELAY);
 			if(i < AT_RESP_LEN)
 			{
 				g_at_packet[i] = buf[i];	
@@ -125,12 +131,12 @@ void ProcessSpecialATString(char *buf)
 	}
 }
 
-void ATReadPacket(char *buf, int len, int *resp_len, int timeout)
+int ATReadPacket(char *buf, int len, int *resp_len, int timeout)
 {	int ret;
 	ret = platform_mutex_lock_timeout(&at_packet_mutex, timeout);
 	if (ret)
 	{
-		*resp_len =  len > g_at_packet? g_at_packet : len;
+		*resp_len =  len > g_at_packet_len? g_at_packet_len : len;
 		memcpy(buf, g_at_packet, *resp_len);
 		return AT_OK;
 	}
@@ -149,7 +155,7 @@ void ATRecvParser(void * params)
 	while(1)
 	{
 		/*读取wifi模块发来的数据：使用阻塞方式*/
-		HAL_AT_Secv(&buf[i], portMAX_DELAY);
+		HAL_AT_Secv(&buf[i], (int)portMAX_DELAY);
 		/*解析结果*/
 		/* 1. 何时解析?
 	     * 1.1收到"\r\n" 
@@ -178,13 +184,14 @@ void ATRecvParser(void * params)
 				i = -1;
 			}
 			i++;
+		}
 			
-
 	}
 }
+	
 
 void Task_ATTest(void *Parm)
-{
+{ 
 	int ret;
 	while(1)
 	{

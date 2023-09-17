@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stddef.h>
+#include <string.h>
 
 void *platform_memory_alloc(size_t size);
 void *platform_memory_calloc(size_t num, size_t size);

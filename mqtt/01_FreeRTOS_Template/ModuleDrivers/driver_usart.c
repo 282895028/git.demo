@@ -71,6 +71,7 @@ int fputc(int ch, FILE *f)
     txcplt_flag = 0;
     HAL_UART_Transmit_IT(&huart1, (uint8_t*)&ch, 1);
     while(txcplt_flag==0);
+	return ch;
 }
 
 /*

@@ -13,3 +13,4 @@ f103_moduel\random.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/A
 f103_moduel\random.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
 f103_moduel\random.o: ..\MQTTClient\platform\FreeRTOS\platform_memory.h
 f103_moduel\random.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+f103_moduel\random.o: D:\keil5\ARM\ARMCC\Bin\..\include\string.h
