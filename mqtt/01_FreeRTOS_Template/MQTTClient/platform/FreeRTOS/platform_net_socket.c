@@ -36,12 +36,12 @@ int platform_net_socket_connect(const char *host, const char *port, int proto)
 	/* 3. *连接到服务器*/
 	if(proto == PLATFORM_NET_PROTO_TCP)
 	{
-		sprintf(cmd, "AT+CIPSTART=\"TCP\" ,\"%s"\",%d",host, port);
-		AT+CIPSTART="TCP" , "192.168.3.116" ,8088
+		sprintf(cmd, "AT+CIPSTART=\"TCP\" ,\"%s\",%d",host, port);
+		//AT+CIPSTART="TCP" , "192.168.3.116" ,8088
 	}
 	else
 	{
-		sprintf(cmd, "AT+CIPSTART=\"UDP\" ,\"%s"\",%d",host, port);
+		sprintf(cmd, "AT+CIPSTART=\"UDP\" ,\"%s\",%d",host, port);
 	}
 	err = ATSendCmd(cmd,NULL, 0, 2000);
 	if(err)
@@ -57,9 +57,22 @@ int platform_net_socket_recv(int fd, void *buf, size_t len, int flags)
     return 0;
 }
 #endif
+
+/* 返回得到的字节数 */
 int platform_net_socket_recv_timeout(int fd, unsigned char *buf, int len, int timeout)
 {
-	return 0;
+	int i = 0;
+	int err;
+	/* 读数据，失败则阻塞*/
+	while (i < len)
+	{
+		err = ATReadData(&buf[i], timeout);
+		if(err)
+		{
+			return 0;	
+		}
+	}
+	return len;
 }
 
 #if 0
@@ -82,7 +95,7 @@ int platform_net_socket_write_timeout(int fd, unsigned char *buf, int len, int t
 		return err;
 	}
 	
-	err = ATSendData(buf, len, 2000);
+	err = ATSendData((char *)buf, len, 2000);
 	if(err)
 	{
 		printf("ATSendData err = %d\n", err);

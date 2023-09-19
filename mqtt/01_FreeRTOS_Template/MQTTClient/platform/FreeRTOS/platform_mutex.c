@@ -9,7 +9,7 @@
 
 int platform_mutex_init(platform_mutex_t* m)
 {
-    m->mutex = xSemaphoreCreateBinary()//xSemaphoreCreateMutex();
+    m->mutex = xSemaphoreCreateBinary();//xSemaphoreCreateMutex();
     xSemaphoreCreateMutex();
     return 0;
 }

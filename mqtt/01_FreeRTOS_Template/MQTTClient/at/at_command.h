@@ -9,11 +9,11 @@
 
 int ATInit(void);
 int ATSendCmd(char *buf,char *resp, int resp_len, int timeout);
-int ATReadPacket(char *buf, int len, int *resp_len, int timeout);
 void ATRecvParser(void * params);
 void Task_ATTest(void *Parm);
 int ATSendData(char *buf,int len, int timeout);
-
+int ATReadData(unsigned char *c , int timeout);
+void MQTT_Client_Task(void *Parm);
 
 
 #endif

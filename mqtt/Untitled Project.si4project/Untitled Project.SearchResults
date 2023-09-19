@@ -1,1 +1,14 @@
-
+---- network_read Matches (13 in 4 files) ----
+mqtt_decode_packet in mqttclient.c (01_FreeRTOS_Template\MQTTClient\mqttclient) :         rc = network_read(c->mqtt_network, &i, 1, timeout);  /* read network data */
+mqtt_packet_drain in mqttclient.c (01_FreeRTOS_Template\MQTTClient\mqttclient) :         read_len = network_read(c->mqtt_network, c->mqtt_read_buf, bytes2read, platform_timer_remain(timer));
+mqtt_read_packet in mqttclient.c (01_FreeRTOS_Template\MQTTClient\mqttclient) :     rc = network_read(c->mqtt_network, c->mqtt_read_buf, len, platform_timer_remain(timer));
+mqtt_read_packet in mqttclient.c (01_FreeRTOS_Template\MQTTClient\mqttclient) :     if ((remain_len > 0) && ((rc = network_read(c->mqtt_network, c->mqtt_read_buf + len, remain_len, platform_timer_remain(timer))) != remain_len))
+network.c (01_FreeRTOS_Template\MQTTClient\network) line 16 : int network_read(network_t *n, unsigned char *buf, int len, int timeout)
+network.h (01_FreeRTOS_Template\MQTTClient\network) line 37 : int network_read(network_t* n, unsigned char* buf, int len, int timeout);
+Untitled Project.SearchResults (D:\桌面\git.demo\mqtt\Untitled Project.si4project) line 1 : ---- network_read Matches (#count#) ----
+Untitled Project.SearchResults (D:\桌面\git.demo\mqtt\Untitled Project.si4project) line 2 : mqtt_decode_packet in mqttclient.c (01_FreeRTOS_Template\MQTTClient\mqttclient) :         rc = network_read(c->mqtt_network, &i, 1, timeout);  /* read network data */
+Untitled Project.SearchResults (D:\桌面\git.demo\mqtt\Untitled Project.si4project) line 3 : mqtt_packet_drain in mqttclient.c (01_FreeRTOS_Template\MQTTClient\mqttclient) :         read_len = network_read(c->mqtt_network, c->mqtt_read_buf, bytes2read, platform_timer_remain(timer));
+Untitled Project.SearchResults (D:\桌面\git.demo\mqtt\Untitled Project.si4project) line 4 : mqtt_read_packet in mqttclient.c (01_FreeRTOS_Template\MQTTClient\mqttclient) :     rc = network_read(c->mqtt_network, c->mqtt_read_buf, len, platform_timer_remain(timer));
+Untitled Project.SearchResults (D:\桌面\git.demo\mqtt\Untitled Project.si4project) line 5 : mqtt_read_packet in mqttclient.c (01_FreeRTOS_Template\MQTTClient\mqttclient) :     if ((remain_len > 0) && ((rc = network_read(c->mqtt_network, c->mqtt_read_buf + len, remain_len, platform_timer_remain(timer))) != remain_len))
+Untitled Project.SearchResults (D:\桌面\git.demo\mqtt\Untitled Project.si4project) line 6 : network.c (01_FreeRTOS_Template\MQTTClient\network) line 16 : int network_read(network_t *n, unsigned char *buf, int len, int timeout)
+Untitled Project.SearchResults (D:\桌面\git.demo\mqtt\Untitled Project.si4project) line 7 : network.h (01_FreeRTOS_Template\MQTTClient\network) line 37 : int network_read(network_t* n, unsigned char* buf, int len, int timeout);

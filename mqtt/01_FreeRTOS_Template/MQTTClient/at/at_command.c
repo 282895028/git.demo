@@ -4,18 +4,20 @@
 #include <platform_mutex.h>
 #include <string.h>
 #include <stdio.h>
+#include <ring_buffer.h>
+
+#include "mqttclient.h"
 
 #define AT_CMD_TIMOUT 1000
 #define AT_RESP_LEN   100
 
+static ring_buffer g_packet_buffer;
 
 static platform_mutex_t at_ret_mutex;
 static platform_mutex_t at_packet_mutex;
 
 static int g_at_status;
 static char g_at_resp[AT_RESP_LEN];
-static char g_at_packet[AT_RESP_LEN];
-static int g_at_packet_len;
 static char *g_cur_cmd;
 
 /* status
@@ -40,6 +42,8 @@ int ATInit(void)
 	platform_mutex_init(&at_packet_mutex);
 	platform_mutex_lock(&at_packet_mutex); //mutex = 0;
 
+	ring_buffer_init(&g_packet_buffer);
+	
 	return 0;
 }
 int ATSendData(char *buf,int len, int timeout)
@@ -67,6 +71,24 @@ int ATSendData(char *buf,int len, int timeout)
 		return AT_CMD_TIMOUT;
 	}
 			
+}
+
+
+int ATReadData(unsigned char *c , int timeout)
+{
+	int ret;
+
+	do{
+		if(0 == ring_buffer_read(c , &g_packet_buffer))
+			return AT_OK;
+		else
+		{
+			ret = platform_mutex_lock_timeout(&at_packet_mutex, timeout);
+			if(0 == ret)
+				return AT_TIMEOUT;
+		}
+	}while(ret == 1);
+	return 0;
 }
 
 
@@ -156,17 +178,20 @@ static void ProcessSpecialATString(char *buf)
 			HAL_AT_Secv(&buf[i], (int)portMAX_DELAY);
 			if(i < AT_RESP_LEN)
 			{
-				g_at_packet[i] = buf[i];	
-				g_at_packet_len = i;
+				/* 把数据放入环形buffer */
+				ring_buffer_write(buf[i], &g_packet_buffer);
+				
+				/* wake up */
+				/* 解锁 */
+				platform_mutex_unlock(&at_packet_mutex);
 			}
 				
 			i++;
 		}
-		/* 解锁 */
-		platform_mutex_unlock(&at_packet_mutex);
 	}
 }
 
+#if 0
 int ATReadPacket(char *buf, int len, int *resp_len, int timeout)
 {	int ret;
 	ret = platform_mutex_lock_timeout(&at_packet_mutex, timeout);
@@ -182,6 +207,7 @@ int ATReadPacket(char *buf, int len, int *resp_len, int timeout)
 	}
 		
 }
+#endif
 
 void ATRecvParser(void * params)
 {
@@ -239,14 +265,42 @@ void ATRecvParser(void * params)
 }
 	
 
-void Task_ATTest(void *Parm)
+static void topic1_handler(void* client, message_data_t* msg)
+{
+    (void) client;
+    MQTT_LOG_I("-----------------------------------------------------------------------------------");
+    MQTT_LOG_I("%s:%d %s()...\ntopic: %s\nmessage:%s", __FILE__, __LINE__, __FUNCTION__, msg->topic_name, (char*)msg->message->payload);
+    MQTT_LOG_I("-----------------------------------------------------------------------------------");
+}
+
+void MQTT_Client_Task(void *Parm)
 { 
-	int ret;
-	while(1)
+    mqtt_client_t *client = NULL;
+    mqtt_log_init();
+
+    client = mqtt_lease();
+	
+    mqtt_set_port(client, "1883");
+	
+    mqtt_set_host(client, "192.168.199.148");
+    mqtt_set_client_id(client, random_string(10));
+    mqtt_set_user_name(client, random_string(10));
+    mqtt_set_password(client, random_string(10));
+    mqtt_set_clean_session(client, 1);
+
+    if(0 != mqtt_connect(client))
 	{
-		ret = ATSendCmd("AT", 2, NULL, 0, 1000);
-		printf("ATSendCmd ret = %d\r\n", ret);
+		printf("can not err\r\n");
+		vTaskDelete(NULL);
 	}
+	
+    mqtt_subscribe(client, "topic1", QOS0, topic1_handler);
+    mqtt_subscribe(client, "topic2", QOS1, NULL);
+    mqtt_subscribe(client, "topic3", QOS2, NULL);
+
+	while(1){
+			vTaskDelay(100);
+		}
 }
 
 
