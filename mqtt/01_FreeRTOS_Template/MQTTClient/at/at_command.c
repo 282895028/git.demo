@@ -273,6 +273,7 @@ static void topic1_handler(void* client, message_data_t* msg)
     MQTT_LOG_I("-----------------------------------------------------------------------------------");
 }
 
+
 void MQTT_Client_Task(void *Parm)
 { 
     mqtt_client_t *client = NULL;
