@@ -57,7 +57,7 @@ int ATSendData(char *buf,int len, int timeout)
 	 * 0 :超时返回
 	 */
 	
-	ret = platform_mutex_lock_timeout(&at_ret_mutex, timeout);
+	ret = platform_mutex_lock_timeout(&at_ret_mutex, AT_CMD_TIMOUT);
 	if(ret)
 	{
 		/*判断返回值*/
@@ -109,7 +109,7 @@ int ATSendCmd(char *buf,char *resp, int resp_len, int timeout)
 	 * 0 :超时返回
 	 */
 	
-	ret = platform_mutex_lock_timeout(&at_ret_mutex, timeout);
+	ret = platform_mutex_lock_timeout(&at_ret_mutex, AT_CMD_TIMOUT);
 	if(ret)
 	{
 		/*判断返回值*/
