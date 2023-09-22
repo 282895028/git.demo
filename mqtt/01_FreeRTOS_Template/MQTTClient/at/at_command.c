@@ -129,9 +129,27 @@ int ATSendCmd(char *buf,char *resp, int resp_len, int timeout)
 			
 }
 
-static int GetCIPSEMDResult(char *buf)
+	
+static int isIPSEMD(void)
+{
+	if(g_cur_cmd && strstr(g_cur_cmd, "AT+CIPSEND="))
+		return 1;
+	else
+		return 0;
+}
+
+
+static int GetCIPSEMDEcho(char *buf)
 {
 	if(g_cur_cmd && strstr(g_cur_cmd, "AT+CIPSEND=") && buf[0] =='>')
+		return 1;
+	else
+		return 0;
+}
+
+static int GetCIPSEMDResult(char *buf)
+{
+	if(g_cur_cmd && strstr(g_cur_cmd, "AT+CIPSEND=") && (strstr(buf, "Recv")))
 		return 1;
 	else
 		return 0;
@@ -228,32 +246,56 @@ void ATRecvParser(void * params)
 	     	/*得到了回车换行 */
 			buf[i+1] = '\0';
 			/* 2. 怎么解析 */
-			if(strstr(buf, "OK\r\n"))
+
+			if(isIPSEMD())
 			{
-				/*记录数据*/
-				memcpy(g_at_resp, buf, i);
-				SetATStatus(AT_OK);
-				platform_mutex_unlock(&at_ret_mutex);
-				i = 0;
+				
+     			if(GetCIPSEMDEcho(buf))
+     			{
+     				SetATStatus(AT_ERR);
+     				platform_mutex_lock(&at_ret_mutex);
+     				i=0;
+     			}
+     			else if(GetCIPSEMDResult(buf))
+     			{
+     				SetATStatus(AT_ERR);
+     				platform_mutex_lock(&at_ret_mutex);
+     				i=0;
+     			}
+				else
+		 		{
+		 			i++;
+		 		}
 			}
-			else if (strstr(buf, "ERROR\r\n"))
-		    {
-				SetATStatus(AT_ERR);
-				platform_mutex_unlock(&at_ret_mutex);
-				i = 0;
-	        }
-			else if(GetCIPSEMDResult(buf))
+
+			else
 			{
-				SetATStatus(AT_ERR);
-				platform_mutex_lock(&at_ret_mutex);
-				i=0;
+				if(strstr(buf, "OK\r\n"))
+				{
+					/*记录数据*/
+					memcpy(g_at_resp, buf, i);
+					SetATStatus(AT_OK);
+					platform_mutex_unlock(&at_ret_mutex);
+					i = 0;
+				}
+				else if (strstr(buf, "ERROR\r\n"))
+				{
+					SetATStatus(AT_ERR);
+					platform_mutex_unlock(&at_ret_mutex);
+					i = 0;
+				}
+				
+				else if (GetSpecialATString(buf))
+				{
+					ProcessSpecialATString(buf);
+					i = 0;
+				}
+				else
+				{
+					i++;	
+				}
 			}
-			else if (GetSpecialATString(buf))
-			{
-				ProcessSpecialATString(buf);
-				i = 0;
-			}
-			
+		
 		}
 		 else
 		 {

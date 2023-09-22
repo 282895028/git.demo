@@ -14,7 +14,8 @@ void *platform_memory_alloc(size_t size)
 {
     char *ptr;
     ptr = pvPortMalloc(size);
-    memset(ptr, 0, size);
+	if(ptr)		
+    	memset(ptr, 0, size);
     return (void *)ptr;
 }
 
