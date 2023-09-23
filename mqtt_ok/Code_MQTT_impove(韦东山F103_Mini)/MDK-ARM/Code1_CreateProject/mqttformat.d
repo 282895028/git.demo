@@ -1,0 +1,11 @@
+code1_createproject\mqttformat.o: ..\mqttclient\mqtt\MQTTFormat.c
+code1_createproject\mqttformat.o: ..\mqttclient\mqtt\StackTrace.h
+code1_createproject\mqttformat.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+code1_createproject\mqttformat.o: ..\mqttclient\mqtt\MQTTPacket.h
+code1_createproject\mqttformat.o: ..\mqttclient\mqtt\MQTTConnect.h
+code1_createproject\mqttformat.o: ..\mqttclient\mqtt\MQTTPublish.h
+code1_createproject\mqttformat.o: ..\mqttclient\mqtt\MQTTSubscribe.h
+code1_createproject\mqttformat.o: ..\mqttclient\mqtt\MQTTUnsubscribe.h
+code1_createproject\mqttformat.o: ..\mqttclient\mqtt\MQTTFormat.h
+code1_createproject\mqttformat.o: ..\mqttclient\mqtt\MQTTPacket.h
+code1_createproject\mqttformat.o: D:\keil5\ARM\ARMCC\Bin\..\include\string.h
